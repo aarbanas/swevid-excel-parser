@@ -1,0 +1,8 @@
+{
+  "PAGES": {
+      "HOME": {
+          "TITLE": "SWEVID Excel Converter",
+          "SELECT_FILE": "Select file"
+      }
+  }
+}
