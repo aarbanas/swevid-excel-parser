@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@electron/remote": "^2.0.5",
-    "convert-excel-to-json": "^1.7.0"
+    "convert-excel-to-json": "^1.7.0",
+    "nedb": "^1.8.0"
   }
 }

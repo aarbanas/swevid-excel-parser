@@ -1,4 +1,4 @@
-<div class="container">
+<div *ngIf="swevidPath; else selectSwevidPath" class="container">
     <h1 class="title">
         {{ 'PAGES.HOME.TITLE' | translate }}
     </h1>
@@ -10,5 +10,15 @@
         {{ 'PAGES.HOME.SELECT_FILE' | translate }}
     </label>
 
-    <label style="margin-top: 2rem; cursor: pointer" (click)="onFolderPick()">TEST</label>
+    <label style="margin-top: 2rem; cursor: pointer" (click)="onFolderPick()">{{ 'PAGES.HOME.CHANGE_SWEVID_PATH' | translate }}</label>
 </div>
+
+<ng-template #selectSwevidPath>
+    <div class="container">
+        <h1 class="title">
+            {{ 'PAGES.HOME.SELECT_SWEVID_PATH' | translate }}
+        </h1>
+
+        <label style="margin-top: 2rem; cursor: pointer" (click)="onFolderPick()">{{ 'PAGES.HOME.SELECT' | translate }}</label>
+    </div>
+</ng-template>

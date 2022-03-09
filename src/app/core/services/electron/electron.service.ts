@@ -16,17 +16,23 @@ export class ElectronService {
     childProcess: typeof childProcess;
     fs: typeof fs;
     excelToJson: typeof excelToJson;
+    dialog: any;
+    app: any;
 
     constructor() {
         // Conditional imports
         if (this.isElectron) {
             this.ipcRenderer = window.require('electron').ipcRenderer;
             this.webFrame = window.require('electron').webFrame;
+            this.dialog = window.require('@electron/remote').dialog;
+            this.app = window.require('@electron/remote').app;
 
             this.childProcess = window.require('child_process');
             this.fs = window.require('fs');
 
             this.excelToJson = window.require('convert-excel-to-json');
+
+
             // Notes :
             // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`
             // and `package.json (root folder)` in order to make it work here in Electron's Renderer process (src folder)

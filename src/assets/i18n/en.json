@@ -2,7 +2,10 @@
   "PAGES": {
       "HOME": {
           "TITLE": "SWEVID Excel Converter",
-          "SELECT_FILE": "Select file"
+          "SELECT_FILE": "Select file",
+          "SELECT": "Select",
+          "CHANGE_SWEVID_PATH": "Change SWEVID path",
+          "SELECT_SWEVID_PATH": "Select SWEVID path"
       }
   }
 }

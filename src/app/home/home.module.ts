@@ -6,6 +6,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 import { SharedModule } from '../shared/shared.module';
 import { ExcelService } from "../core/services/excel/excel.service";
+import { DatabaseService } from "../core/services/database/database.service";
 
 @NgModule({
     declarations: [HomeComponent],
@@ -15,7 +16,8 @@ import { ExcelService } from "../core/services/excel/excel.service";
         HomeRoutingModule
     ],
     providers: [
-        ExcelService
+        ExcelService,
+        DatabaseService
     ]
 })
 export class HomeModule {
