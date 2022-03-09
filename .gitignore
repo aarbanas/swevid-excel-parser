@@ -43,3 +43,6 @@ Thumbs.db
 
 package-lock.json
 /app/package-lock.json
+
+*.js
+*.js.map

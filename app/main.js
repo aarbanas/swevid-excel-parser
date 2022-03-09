@@ -4,6 +4,8 @@ var electron_1 = require("electron");
 var path = require("path");
 var fs = require("fs");
 var url = require("url");
+var remoteMain = require("@electron/remote/main");
+remoteMain.initialize();
 var win = null;
 var args = process.argv.slice(1), serve = args.some(function (val) { return val === '--serve'; });
 function createWindow() {
@@ -21,6 +23,7 @@ function createWindow() {
             contextIsolation: false // false if you want to run e2e test with Spectron
         },
     });
+    remoteMain.enable(win.webContents);
     if (serve) {
         win.webContents.openDevTools();
         require('electron-reload')(__dirname, {

@@ -4,6 +4,7 @@
   "main": "main.js",
   "private": true,
   "dependencies": {
+    "@electron/remote": "^2.0.5",
     "convert-excel-to-json": "^1.7.0"
   }
 }

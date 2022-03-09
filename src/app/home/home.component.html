@@ -9,4 +9,6 @@
                style="display: none" id="my-file-selector" (change)="onFileAdd($event.target['files'][0])">
         {{ 'PAGES.HOME.SELECT_FILE' | translate }}
     </label>
+
+    <label style="margin-top: 2rem; cursor: pointer" (click)="onFolderPick()">TEST</label>
 </div>

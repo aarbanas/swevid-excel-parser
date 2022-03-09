@@ -1,7 +1,9 @@
-import { app, BrowserWindow, Menu, screen } from 'electron';
+import { app, BrowserWindow, screen } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
+import * as remoteMain from '@electron/remote/main';
+remoteMain.initialize();
 
 let win: BrowserWindow = null;
 const args = process.argv.slice(1),
@@ -24,6 +26,8 @@ function createWindow(): BrowserWindow {
             contextIsolation: false  // false if you want to run e2e test with Spectron
         },
     });
+
+    remoteMain.enable(win.webContents);
 
     if (serve) {
         win.webContents.openDevTools();
