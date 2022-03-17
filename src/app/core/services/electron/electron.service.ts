@@ -6,6 +6,7 @@ import { ipcRenderer, webFrame } from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
 import * as excelToJson from 'convert-excel-to-json';
+import * as parsedbf from "parsedbf";
 
 @Injectable({
     providedIn: 'root'
@@ -18,6 +19,7 @@ export class ElectronService {
     excelToJson: typeof excelToJson;
     dialog: any;
     app: any;
+    parseDBF: typeof parsedbf;
 
     constructor() {
         // Conditional imports
@@ -31,7 +33,7 @@ export class ElectronService {
             this.fs = window.require('fs');
 
             this.excelToJson = window.require('convert-excel-to-json');
-
+            this.parseDBF = window.require('parsedbf');
 
             // Notes :
             // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`

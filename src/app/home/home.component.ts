@@ -1,8 +1,10 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ExcelService } from "../core/services/excel/excel.service";
 import { ElectronService } from "../core/services";
 import { DatabaseService } from "../core/services/database/database.service";
 import { Result } from "../../interface/Result";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CellPickerModalComponent } from "./components/cell-picker-modal/cell.picker.modal.component";
 
 @Component({
     selector: 'app-home',
@@ -12,14 +14,22 @@ import { Result } from "../../interface/Result";
 export class HomeComponent implements OnInit {
 
     swevidPath: string = "";
+    organisations: any[] = [];
+
+    selectedOrganisation: any = null;
 
     constructor(private excelService: ExcelService,
                 private electronService: ElectronService,
-                private databaseService: DatabaseService) {
+                private databaseService: DatabaseService,
+                private modal: NgbModal) {
     }
 
     async ngOnInit(): Promise<void> {
         await this.getSwevidPath();
+        if (!this.swevidPath)
+            return;
+
+        await this.parseOrganisations();
     }
 
     async getSwevidPath(): Promise<Result<string>> {
@@ -28,12 +38,28 @@ export class HomeComponent implements OnInit {
             return;
 
         this.swevidPath = config.options.path;
-        console.log(config);
+    }
+
+    private async parseOrganisations() {
+        const orgBuffer = await this.readFile(this.swevidPath + "/Baza/Organizacija.DBF");
+        if (!orgBuffer?.length)
+            return;
+
+        this.organisations = this.electronService.parseDBF(orgBuffer);
+    }
+
+    onSelectOrganisation(org) {
+        this.selectedOrganisation = org;
     }
 
     onFileAdd(file: File) {
         const jsonFile = this.excelService.convertToJSON(file);
+        console.log(jsonFile);
 
+        const modal = this.modal.open(CellPickerModalComponent, { backdrop: "static", keyboard: false });
+        modal.result.then(res => {
+
+        })
     }
 
     async onFolderPick() {
@@ -43,11 +69,30 @@ export class HomeComponent implements OnInit {
 
         const config = await this.databaseService.findOne("configurations", { key: "swevid-path" });
         if (!config) {
-            await this.databaseService.create("configurations", { key: "swevid-path", options: { path: path.filePaths[0] } });
+            await this.databaseService.create("configurations", {
+                key: "swevid-path",
+                options: { path: path.filePaths[0] }
+            });
             window.location.reload();
             return;
         }
 
-        await this.databaseService.update("configurations", { key: "swevid-path" }, { key: "swevid-path", options: { path: path.filePaths[0] } }, false);
+        await this.databaseService.update("configurations", { key: "swevid-path" }, {
+            key: "swevid-path",
+            options: { path: path.filePaths[0] }
+        }, false);
+    }
+
+    private async readFile(path: string): Promise<Buffer> {
+        return new Promise(resolve => {
+            this.electronService.fs.readFile(path, null, (err, data) => {
+                if (err) {
+                    resolve(null);
+                    return;
+                }
+
+                resolve(data);
+            });
+        });
     }
 }
