@@ -19,7 +19,7 @@ import { CellPickerModalComponent } from "./components/cell-picker-modal/cell.pi
         CommonModule,
         SharedModule,
         HomeRoutingModule,
-        NgSelectModule,
+        NgSelectModule
     ],
     providers: [
         ExcelService,

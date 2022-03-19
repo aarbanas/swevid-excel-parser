@@ -1,13 +1,24 @@
-<div class="modal-header">
+<div class="modal-header d-flex">
+    <h4 class="modal-title" id="modal-basic-title">{{'PAGES.CELL.TITLE' | translate}}</h4>
     <button type="button" class="close" aria-label="Close" (click)="close()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 
 <div class="modal-body">
-    WHOO
+    <ng-select [items]="sheets" (change)="onSelectSheet($event)"
+               placeholder="Select sheet"></ng-select>
+
+    <div *ngIf="selectedSheet" class="d-flex">
+        <pre>{{jsonFile[selectedSheet] | json}}</pre>
+    </div>
 </div>
 
 <div class="modal-footer">
-
+    <button (click)="close()" class="btn btn-outline-secondary">
+        {{ 'PAGES.CELL.CLOSE' | translate }}
+    </button>
+    <button (click)="submit()" class="btn btn-primary" >
+        {{ 'PAGES.CELL.SUBMIT' | translate }}
+    </button>
 </div>

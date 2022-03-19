@@ -54,9 +54,13 @@ export class HomeComponent implements OnInit {
 
     onFileAdd(file: File) {
         const jsonFile = this.excelService.convertToJSON(file);
-        console.log(jsonFile);
 
-        const modal = this.modal.open(CellPickerModalComponent, { backdrop: "static", keyboard: false });
+        this.openModal(jsonFile);
+    }
+
+    private openModal(jsonFile: any) {
+        const modal = this.modal.open(CellPickerModalComponent, { backdrop: "static", keyboard: false, size: "xl" });
+        modal.componentInstance.jsonFile = jsonFile;
         modal.result.then(res => {
 
         })
