@@ -9,8 +9,51 @@
     <ng-select [items]="sheets" (change)="onSelectSheet($event)"
                placeholder="Select sheet"></ng-select>
 
-    <div *ngIf="selectedSheet" class="d-flex">
-        <pre>{{jsonFile[selectedSheet] | json}}</pre>
+    <div *ngIf="selectedSheet && !selectedRow" class="d-flex flex-column mt-2">
+        <h3>Select row from where to start</h3>
+        <ng-container *ngFor="let row of jsonFile[selectedSheet]; let i = index" class="mt-2">
+            <p (click)="onRowSelected(i + 1)">{{ i + 1}}. {{ row | json}} <br></p>
+        </ng-container>
+    </div>
+
+    <div *ngIf="selectedRow" class="d-flex flex-column mt-2">
+        <h3>Starting from row: {{ selectedRow }}</h3>
+
+        <div class="d-flex mt-2">
+            <ng-container *ngFor="let column of ObjectKeys(jsonFile[selectedSheet][selectedRow - 2]);">
+                <span>{{ column }}: {{ jsonFile[selectedSheet][selectedRow - 2][column] }}</span> &nbsp;
+            </ng-container>
+        </div>
+        <hr>
+        <div class="d-flex flex-column mt-2">
+            <ng-container *ngFor="let column of ObjectKeys(jsonFile[selectedSheet][selectedRow - 1]);">
+                <span>{{ column }}: {{ jsonFile[selectedSheet][selectedRow - 1][column] }}</span>
+            </ng-container>
+        </div>
+        <hr>
+
+        <div class="d-flex flex-column mt-2">
+            <h3>Select cell values: </h3>
+
+            <div class="form-group">
+                <label>Name:</label>
+                <ng-select [items]="columns" [(ngModel)]="selectedName"
+                           placeholder="Select name"></ng-select>
+            </div>
+
+            <div class="form-group">
+                <label>Sex:</label>
+                <ng-select [items]="columns" [(ngModel)]="selectedSex"
+                           placeholder="Select name"></ng-select>
+            </div>
+
+            <div class="form-group">
+                <label>Year of Birth:</label>
+                <ng-select [items]="columns" [(ngModel)]="selectedYob"
+                           placeholder="Select name"></ng-select>
+            </div>
+        </div>
+
     </div>
 </div>
 
@@ -18,7 +61,7 @@
     <button (click)="close()" class="btn btn-outline-secondary">
         {{ 'PAGES.CELL.CLOSE' | translate }}
     </button>
-    <button (click)="submit()" class="btn btn-primary" >
+    <button (click)="submit()" class="btn btn-primary">
         {{ 'PAGES.CELL.SUBMIT' | translate }}
     </button>
 </div>

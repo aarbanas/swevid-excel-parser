@@ -408,4 +408,11 @@ html, body {
   }
 }
 
-
+p {
+  display: inline-block;
+  width: 650px;
+  white-space: nowrap;
+  overflow: hidden !important;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}

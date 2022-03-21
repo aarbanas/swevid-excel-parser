@@ -10,6 +10,14 @@ export class CellPickerModalComponent implements OnInit {
 
     sheets: string[] = [];
     selectedSheet: string = "";
+    selectedRow: number = 0;
+
+    ObjectKeys = Object.keys;
+
+    columns: string[] = [];
+    selectedName: string = "";
+    selectedSex: string = "";
+    selectedYob: string = "";
 
     constructor(private activeModal: NgbActiveModal) {
     }
@@ -20,6 +28,12 @@ export class CellPickerModalComponent implements OnInit {
 
     onSelectSheet(sheet: string) {
         this.selectedSheet = sheet;
+        this.selectedRow = 0;
+    }
+
+    onRowSelected(index: number) {
+        this.selectedRow = index;
+        this.columns = Object.keys(this.jsonFile[this.selectedSheet][this.selectedRow - 2]);
     }
 
     submit() {
