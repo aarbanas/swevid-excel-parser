@@ -21,13 +21,13 @@
 
         <div class="d-flex mt-2">
             <ng-container *ngFor="let column of ObjectKeys(jsonFile[selectedSheet][selectedRow - 2]);">
-                <span>{{ column }}: {{ jsonFile[selectedSheet][selectedRow - 2][column] }}</span> &nbsp;
+                <span><strong>{{ column }} | </strong> {{ jsonFile[selectedSheet][selectedRow - 2][column] }}</span> &nbsp;
             </ng-container>
         </div>
         <hr>
         <div class="d-flex flex-column mt-2">
             <ng-container *ngFor="let column of ObjectKeys(jsonFile[selectedSheet][selectedRow - 1]);">
-                <span>{{ column }}: {{ jsonFile[selectedSheet][selectedRow - 1][column] }}</span>
+                <span><strong>{{ column }}:</strong> {{ jsonFile[selectedSheet][selectedRow - 1][column] }}</span>
             </ng-container>
         </div>
         <hr>
@@ -52,8 +52,37 @@
                 <ng-select [items]="columns" [(ngModel)]="selectedYob"
                            placeholder="Select name"></ng-select>
             </div>
+
+            <div class="form-group">
+                <label>Disciplines starting from:</label>
+                <ng-select [items]="columns" [(ngModel)]="disciplinesFrom"
+                           placeholder="Select name"></ng-select>
+            </div>
+
+            <div class="form-group">
+                <label>Disciplines ending on:</label>
+                <ng-select [items]="columns" [(ngModel)]="disciplinesTo"
+                           placeholder="Select name"></ng-select>
+            </div>
         </div>
 
+        <!--Select column for and to where disciplines are-->
+        <div *ngIf="disciplinesFrom && disciplinesTo" class="d-flex flex-column mt-2">
+            <h3 style="cursor: pointer" (click)="calculateDisciplinesColumns()">Select what discipline is in which cell: </h3>
+
+            <ng-container *ngIf="disciplinesColumns.length">
+                <ng-container *ngFor="let disciplineColumn of disciplinesColumns;">
+                    <div class="form-group">
+                        <label>{{ jsonFile[selectedSheet][selectedRow - 2][disciplineColumn] }}:</label>
+                        <ng-select [items]="disciplines">
+                            <ng-template ng-label-tmp ng-option-tmp let-item="item">
+                                {{item.NAZIV + " - " + item.BAZEN + item.JM}}
+                            </ng-template>
+                        </ng-select>
+                    </div>
+                </ng-container>
+            </ng-container>
+        </div>
     </div>
 </div>
 
