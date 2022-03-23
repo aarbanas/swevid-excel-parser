@@ -14,6 +14,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HomeModule } from './home/home.module';
 import { AppComponent } from './app.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
+import { Angular2PromiseButtonModule } from 'angular2-promise-buttons';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -29,6 +30,7 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new Transla
         HomeModule,
         AppRoutingModule,
         NgbModule,
+        Angular2PromiseButtonModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,

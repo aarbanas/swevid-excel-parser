@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
     onFileAdd(file: File) {
         const jsonFile = this.excelService.convertToJSON(file);
 
-        this.openModal(jsonFile);
+        return this.openModal(jsonFile);
     }
 
     private openModal(jsonFile: any) {
@@ -63,7 +63,8 @@ export class HomeComponent implements OnInit {
         modal.componentInstance.jsonFile = jsonFile;
         modal.componentInstance.swevidPath = this.swevidPath;
         modal.result.then(res => {
-
+            if (!res.success)
+                return;
         })
     }
 

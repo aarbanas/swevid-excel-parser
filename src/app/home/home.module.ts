@@ -9,6 +9,7 @@ import { ExcelService } from "../core/services/excel/excel.service";
 import { DatabaseService } from "../core/services/database/database.service";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { CellPickerModalComponent } from "./components/cell-picker-modal/cell.picker.modal.component";
+import { Angular2PromiseButtonModule } from "angular2-promise-buttons";
 
 @NgModule({
     declarations: [
@@ -19,7 +20,8 @@ import { CellPickerModalComponent } from "./components/cell-picker-modal/cell.pi
         CommonModule,
         SharedModule,
         HomeRoutingModule,
-        NgSelectModule
+        NgSelectModule,
+        Angular2PromiseButtonModule
     ],
     providers: [
         ExcelService,

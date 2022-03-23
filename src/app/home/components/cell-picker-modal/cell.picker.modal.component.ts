@@ -1,6 +1,7 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ElectronService } from "../../../core/services";
+import { DataParser } from "../parser/data.parser";
 
 @Component({
     templateUrl: "./cell.picker.modal.component.html"
@@ -25,6 +26,10 @@ export class CellPickerModalComponent implements OnInit {
     disciplinesTo: string = "";
     disciplinesColumns: string[] = [];
     disciplines: any[] = [];
+
+    disciplineCell: {[cell: string]: any} = {};
+
+    promiseBtn: any;
 
     constructor(private activeModal: NgbActiveModal,
                 private electronService: ElectronService) {
@@ -68,10 +73,21 @@ export class CellPickerModalComponent implements OnInit {
     }
 
     submit() {
-
+        this.promiseBtn = (async () => {
+            const dataParser = new DataParser();
+            await dataParser.parse(this.jsonFile, this.selectedSheet, this.selectedRow - 1, this.selectedName, this.selectedSex, this.selectedYob, this.disciplineCell);
+        })();
     }
 
     close() {
+        this.selectedSheet = "";
+        this.selectedRow = 0;
+        this.selectedName = "";
+        this.selectedSex = "";
+        this.selectedYob = "";
+        this.disciplineCell = {};
+        this.jsonFile = null;
+        this.swevidPath = "";
         this.activeModal.close({ success: false });
     }
 }

@@ -10,7 +10,7 @@
                placeholder="Select sheet"></ng-select>
 
     <div *ngIf="selectedSheet && !selectedRow" class="d-flex flex-column mt-2">
-        <h3>Select row from where to start</h3>
+        <h3>Select row from where to start reading swimmers</h3>
         <ng-container *ngFor="let row of jsonFile[selectedSheet]; let i = index" class="mt-2">
             <p (click)="onRowSelected(i + 1)">{{ i + 1}}. {{ row | json}} <br></p>
         </ng-container>
@@ -68,13 +68,13 @@
 
         <!--Select column for and to where disciplines are-->
         <div *ngIf="disciplinesFrom && disciplinesTo" class="d-flex flex-column mt-2">
-            <h3 style="cursor: pointer" (click)="calculateDisciplinesColumns()">Select what discipline is in which cell: </h3>
+            <h3 style="cursor: pointer" (click)="calculateDisciplinesColumns()">Select what discipline is in which cell (click here): </h3>
 
             <ng-container *ngIf="disciplinesColumns.length">
                 <ng-container *ngFor="let disciplineColumn of disciplinesColumns;">
                     <div class="form-group">
                         <label>{{ jsonFile[selectedSheet][selectedRow - 2][disciplineColumn] }}:</label>
-                        <ng-select [items]="disciplines">
+                        <ng-select [items]="disciplines" [(ngModel)]="disciplineCell[disciplineColumn]">
                             <ng-template ng-label-tmp ng-option-tmp let-item="item">
                                 {{item.NAZIV + " - " + item.BAZEN + item.JM}}
                             </ng-template>
@@ -90,7 +90,7 @@
     <button (click)="close()" class="btn btn-outline-secondary">
         {{ 'PAGES.CELL.CLOSE' | translate }}
     </button>
-    <button (click)="submit()" class="btn btn-primary">
+    <button (click)="submit()"  [promiseBtn]="promiseBtn" [disabled]="!selectedName || !selectedYob || !selectedSex || !ObjectKeys(disciplineCell).length" class="btn btn-primary">
         {{ 'PAGES.CELL.SUBMIT' | translate }}
     </button>
 </div>
