@@ -10,6 +10,7 @@ export class CellPickerModalComponent implements OnInit {
 
     @Input() jsonFile: any;
     @Input() swevidPath: string;
+    @Input() organisation: any;
 
     sheets: string[] = [];
     selectedSheet: string = "";
@@ -75,7 +76,7 @@ export class CellPickerModalComponent implements OnInit {
     submit() {
         this.promiseBtn = (async () => {
             const dataParser = new DataParser();
-            await dataParser.parse(this.jsonFile, this.selectedSheet, this.selectedRow - 1, this.selectedName, this.selectedSex, this.selectedYob, this.disciplineCell);
+            await dataParser.parse(this.jsonFile, this.selectedSheet, this.selectedRow - 1, this.selectedName, this.selectedSex, this.selectedYob, this.disciplineCell, this.organisation);
         })();
     }
 

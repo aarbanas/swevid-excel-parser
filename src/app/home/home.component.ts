@@ -62,6 +62,7 @@ export class HomeComponent implements OnInit {
         const modal = this.modal.open(CellPickerModalComponent, { backdrop: "static", keyboard: false, size: "xl" });
         modal.componentInstance.jsonFile = jsonFile;
         modal.componentInstance.swevidPath = this.swevidPath;
+        modal.componentInstance.organisation = this.selectedOrganisation;
         modal.result.then(res => {
             if (!res.success)
                 return;
