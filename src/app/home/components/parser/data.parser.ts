@@ -1,9 +1,11 @@
+import { ElectronService } from "../../../core/services";
+
 export class DataParser {
 
-    constructor() {
+    constructor(private electronService: ElectronService) {
     }
 
-    async parse(json: any, sheet: string, starting_row: number, name_cell: string, sex_cell: string, year_of_birth_cell: string, disciplines: { [cell: string]: any }, organisation: any): Promise<void> {
+    async parse(json: any, sheet: string, starting_row: number, name_cell: string, sex_cell: string, year_of_birth_cell: string, disciplines: { [cell: string]: any }, organisation: any, swevid_path: string): Promise<{ success: boolean, error?: string }> {
         let counter = 0;
         const swimmers: Swimmer[] = [];
         const swimmer_entry_data: any[] = [];
@@ -23,7 +25,7 @@ export class DataParser {
                 IME: row[name_cell],
                 PREZIME: "",
                 JMBG: "",
-                RODEN: "1/1/" + row[year_of_birth_cell].toString(),
+                RODEN: new Date(Number(row[year_of_birth_cell]), 0, 1, 23, 30),
                 SPOL: row[sex_cell].match(new RegExp("^m", "i")) ? "M" : "Z", //M | Z,
                 ULICA: "",
                 GRAD: "",
@@ -32,16 +34,16 @@ export class DataParser {
                 WEB: "",
                 DOBS: 0,
                 KAT: 0,
-                KATOD: "",
-                KATDO: "",
+                KATOD: null,
+                KATDO: null,
                 SIFRAORG: "",
                 RTFOPIS: "",
                 SLIKA: "",
                 STARASIFRA: "",
-                ISOK: "T",
+                ISOK: "",
                 USR: "",
                 ADATUM: ""
-            }
+            };
             swimmers.push(swimmer);
 
             //Iterate through all disciplines swimmer is swimming
@@ -49,9 +51,9 @@ export class DataParser {
                 if (!row[column])
                     return;
 
-                const swimmer_data: any = { //TURNIR_REZ baza
+                const swimmer_data: any = { //TURNIR_REZ table
                     SIFRA: 24,
-                    PLIVAC: swimmer.SIFRA, //19101###XXXXX1
+                    PLIVAC: swimmer.SIFRA,
                     PLIVACN: swimmer.IME,
                     SPOL: swimmer.SPOL, // M | Z
                     DOBS: 0,
@@ -173,6 +175,18 @@ export class DataParser {
                 swimmer_entry_data.push(swimmer_data);
             });
         }
+
+        //Save swimmers changes
+        const swimmerChanges = await this.appendChangeToDBF(swevid_path + "/Baza/Plivac.DBF", swimmers);
+        if (!swimmerChanges.success)
+            return swimmerChanges;
+
+        //Save entry changes
+        const entryChanges = await this.appendChangeToDBF(swevid_path + "/Baza/TurnirRez.DBF", swimmer_entry_data);
+        if (!entryChanges.success)
+            return entryChanges;
+
+        return { success: true };
     }
 
     private getSwimmerId(counter: string): string {
@@ -188,7 +202,7 @@ export class DataParser {
         for (let i = 0; i < reverseString.length; i++) {
             if (!haveMillis) {
                 if (!isNaN(Number(reverseString[i])))
-                    milliseconds+= reverseString[i];
+                    milliseconds += reverseString[i];
                 else
                     haveMillis = true;
 
@@ -196,14 +210,14 @@ export class DataParser {
             }
             if (!haveSeconds) {
                 if (!isNaN(Number(reverseString[i])))
-                    seconds+= reverseString[i];
+                    seconds += reverseString[i];
                 else
                     haveSeconds = true;
 
                 continue;
             }
 
-            minutes+= reverseString[i];
+            minutes += reverseString[i];
         }
 
         const finalMillis = this.fillMillis(milliseconds.split("").reverse().join(""));
@@ -223,12 +237,28 @@ export class DataParser {
         return '0'.repeat(zeroNum) + time;
     }
 
+    private async appendChangeToDBF(path: string, data: any): Promise<{ success: boolean, error?: string }> {
+        const dbf = await this.electronService.dbffile.DBFFile.open(path);
+        if (!dbf) {
+            return { success: false, error: "Can not load DBF File" };
+        }
+
+        try {
+            await dbf.appendRecords(data);
+        } catch (e) {
+            return { success: false, error: e.message };
+        }
+
+        return { success: true };
+    }
+
+
     sleep() {
         return new Promise(resolve => {
             setTimeout(() => {
                 resolve(true);
-            }, 3000)
-        })
+            }, 3000);
+        });
     }
 }
 
@@ -237,7 +267,7 @@ type Swimmer = {
     IME: string,
     PREZIME: string,
     JMBG: string,
-    RODEN: string,
+    RODEN: Date,
     SPOL: "M" | "Z",
     ULICA: string,
     GRAD: string,
@@ -246,13 +276,13 @@ type Swimmer = {
     WEB: string,
     DOBS: number,
     KAT: number,
-    KATOD: string,
-    KATDO: string,
+    KATOD: null,
+    KATDO: null,
     SIFRAORG: string,
     RTFOPIS: string,
     SLIKA: string,
     STARASIFRA: string,
-    ISOK: "T",
+    ISOK: string,
     USR: string,
     ADATUM: string
 }

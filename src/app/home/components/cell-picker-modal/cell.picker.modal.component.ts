@@ -75,12 +75,13 @@ export class CellPickerModalComponent implements OnInit {
 
     submit() {
         this.promiseBtn = (async () => {
-            const dataParser = new DataParser();
-            await dataParser.parse(this.jsonFile, this.selectedSheet, this.selectedRow - 1, this.selectedName, this.selectedSex, this.selectedYob, this.disciplineCell, this.organisation);
+            const dataParser = new DataParser(this.electronService);
+            const result = await dataParser.parse(this.jsonFile, this.selectedSheet, this.selectedRow - 1, this.selectedName, this.selectedSex, this.selectedYob, this.disciplineCell, this.organisation, this.swevidPath);
+            this.close(result);
         })();
     }
 
-    close() {
+    close(result?: { success: boolean, error?: string }) {
         this.selectedSheet = "";
         this.selectedRow = 0;
         this.selectedName = "";
@@ -89,6 +90,6 @@ export class CellPickerModalComponent implements OnInit {
         this.disciplineCell = {};
         this.jsonFile = null;
         this.swevidPath = "";
-        this.activeModal.close({ success: false });
+        this.activeModal.close(result || { success: false });
     }
 }

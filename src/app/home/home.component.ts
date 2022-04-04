@@ -5,6 +5,7 @@ import { DatabaseService } from "../core/services/database/database.service";
 import { Result } from "../../interface/Result";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { CellPickerModalComponent } from "./components/cell-picker-modal/cell.picker.modal.component";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
     selector: 'app-home',
@@ -21,7 +22,8 @@ export class HomeComponent implements OnInit {
     constructor(private excelService: ExcelService,
                 private electronService: ElectronService,
                 private databaseService: DatabaseService,
-                private modal: NgbModal) {
+                private modal: NgbModal,
+                private toastService: ToastrService) {
     }
 
     async ngOnInit(): Promise<void> {
@@ -64,8 +66,14 @@ export class HomeComponent implements OnInit {
         modal.componentInstance.swevidPath = this.swevidPath;
         modal.componentInstance.organisation = this.selectedOrganisation;
         modal.result.then(res => {
-            if (!res.success)
-                return;
+            if (!res.success) {
+                if (!res.error)
+                    return;
+
+                this.toastService.error(res.error);
+            }
+
+            this.toastService.success("Excel File imported successfully to SWEVID!");
         })
     }
 
