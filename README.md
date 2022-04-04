@@ -15,4 +15,23 @@ for SWEVID:
 
 ## Getting Started
 
-TODO
+### Usage
+From the page "Releases" download the latest version of application for your operating 
+system. Application is build in portable version so there is no need for any installations.
+
+### Local setup and development
+To application to run locally Node needs to be installed, everything else comes with
+application.
+1. Clone project 
+2. Install dependencies
+```shell
+$ npm install
+$ cd app/
+$ npm install
+```
+3. Run locally from root folder
+```shell
+$ npm run start
+```
+
+
