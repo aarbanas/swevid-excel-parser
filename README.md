@@ -4,7 +4,7 @@
 # Introduction
 
 This is a small Angular Electron app used for parsing Excel files to be compatible
-with SWEVID swimming software. 
+with SWEVID swimming software maintained by Croatian Swimming Federation ([HPS](https://www.hrvatski-plivacki-savez.hr/)). 
 Application is converting one Excel file with next entries to Access data model needed
 for SWEVID:
 1. Swimmer name
