@@ -66,6 +66,7 @@
         "bootstrap": "^5.1.3",
         "convert-excel-to-json": "^1.7.0",
         "dbffile": "^1.8.1",
+        "exceljs": "^4.3.0",
         "nedb": "^1.8.0",
         "ngx-toastr": "^14.2.2",
         "parsedbf": "^1.1.1",

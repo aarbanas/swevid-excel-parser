@@ -33,7 +33,8 @@ export class CellPickerModalComponent implements OnInit {
     promiseBtn: any;
 
     constructor(private activeModal: NgbActiveModal,
-                private electronService: ElectronService) {
+                private electronService: ElectronService,
+                private dataParser: DataParser) {
     }
 
     ngOnInit(): void {
@@ -75,8 +76,7 @@ export class CellPickerModalComponent implements OnInit {
 
     submit() {
         this.promiseBtn = (async () => {
-            const dataParser = new DataParser(this.electronService);
-            const result = await dataParser.parse(this.jsonFile, this.selectedSheet, this.selectedRow - 1, this.selectedName, this.selectedSex, this.selectedYob, this.disciplineCell, this.organisation, this.swevidPath);
+            const result = await this.dataParser.parse(this.jsonFile, this.selectedSheet, this.selectedRow - 1, this.selectedName, this.selectedSex, this.selectedYob, this.disciplineCell, this.organisation, this.swevidPath);
             this.close(result);
         })();
     }

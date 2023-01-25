@@ -1,8 +1,14 @@
+import { ExcelService } from './../../../core/services/excel/excel.service';
 import { ElectronService } from "../../../core/services";
+import { Injectable } from "@angular/core";
 
+@Injectable({
+    providedIn: 'root'
+})
 export class DataParser {
 
-    constructor(private electronService: ElectronService) {
+    constructor(private electronService: ElectronService,
+        private excelService: ExcelService) {
     }
 
     async parse(json: any, sheet: string, starting_row: number, name_cell: string, sex_cell: string, year_of_birth_cell: string, disciplines: { [cell: string]: any }, organisation: any, swevid_path: string): Promise<{ success: boolean, error?: string }> {
@@ -176,15 +182,19 @@ export class DataParser {
             });
         }
 
+        await Promise.all([
+            this.excelService.createNewExcelFile('/Users/arbi/Documents/Apps/swevid-excel-parser/swimmers.xlsx', swimmers),
+            this.excelService.createNewExcelFile('/Users/arbi/Documents/Apps/swevid-excel-parser/swimmer_data.xlsx', swimmer_entry_data),
+        ]) 
         //Save swimmers changes
-        const swimmerChanges = await this.appendChangeToDBF(swevid_path + "/Baza/Plivac.DBF", swimmers);
-        if (!swimmerChanges.success)
-            return swimmerChanges;
+        // const swimmerChanges = await this.appendChangeToDBF(swevid_path + "/Baza/Plivac.DBF", swimmers);
+        // if (!swimmerChanges.success)
+        //     return swimmerChanges;
 
-        //Save entry changes
-        const entryChanges = await this.appendChangeToDBF(swevid_path + "/Baza/TurnirRez.DBF", swimmer_entry_data);
-        if (!entryChanges.success)
-            return entryChanges;
+        // //Save entry changes
+        // const entryChanges = await this.appendChangeToDBF(swevid_path + "/Baza/TurnirRez.DBF", swimmer_entry_data);
+        // if (!entryChanges.success)
+        //     return entryChanges;
 
         return { success: true };
     }

@@ -8,6 +8,7 @@ import * as fs from 'fs';
 import * as excelToJson from 'convert-excel-to-json';
 import * as parsedbf from "parsedbf";
 import * as dbffile from 'dbffile';
+import * as ExcelJS from 'exceljs';
 
 @Injectable({
     providedIn: 'root'
@@ -22,6 +23,7 @@ export class ElectronService {
     app: any;
     parseDBF: typeof parsedbf;
     dbffile: typeof dbffile;
+    ExcelJS: typeof ExcelJS;
 
     constructor() {
         // Conditional imports
@@ -37,6 +39,7 @@ export class ElectronService {
             this.excelToJson = window.require('convert-excel-to-json');
             this.parseDBF = window.require('parsedbf');
             this.dbffile = window.require('dbffile');
+            this.ExcelJS = window.require('exceljs');
 
             // Notes :
             // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`
