@@ -1,3 +1,4 @@
+import { DataParser } from './components/parser/data.parser';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -25,7 +26,8 @@ import { Angular2PromiseButtonModule } from "angular2-promise-buttons";
     ],
     providers: [
         ExcelService,
-        DatabaseService
+        DatabaseService,
+        DataParser
     ],
     entryComponents: [
         CellPickerModalComponent
