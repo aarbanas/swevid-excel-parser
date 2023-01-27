@@ -1,4 +1,4 @@
-import { ExcelService } from './../../../core/services/excel/excel.service';
+import { ExcelService } from '../../../core/services/excel/excel.service';
 import { ElectronService } from "../../../core/services";
 import { Injectable } from "@angular/core";
 
@@ -183,18 +183,9 @@ export class DataParser {
         }
 
         await Promise.all([
-            this.excelService.createNewExcelFile('/Users/arbi/Documents/Apps/swevid-excel-parser/swimmers.xlsx', swimmers),
-            this.excelService.createNewExcelFile('/Users/arbi/Documents/Apps/swevid-excel-parser/swimmer_data.xlsx', swimmer_entry_data),
-        ]) 
-        //Save swimmers changes
-        // const swimmerChanges = await this.appendChangeToDBF(swevid_path + "/Baza/Plivac.DBF", swimmers);
-        // if (!swimmerChanges.success)
-        //     return swimmerChanges;
-
-        // //Save entry changes
-        // const entryChanges = await this.appendChangeToDBF(swevid_path + "/Baza/TurnirRez.DBF", swimmer_entry_data);
-        // if (!entryChanges.success)
-        //     return entryChanges;
+            this.excelService.createNewExcelFile(swevid_path + '/Plivac.xlsx', swimmers),
+            this.excelService.createNewExcelFile(swevid_path + '/TurnirRez.xlsx', swimmer_entry_data),
+        ]);
 
         return { success: true };
     }
@@ -245,30 +236,6 @@ export class DataParser {
     private prefillTimeWithZeros(time: string): string {
         const zeroNum = 2 - time.length;
         return '0'.repeat(zeroNum) + time;
-    }
-
-    private async appendChangeToDBF(path: string, data: any): Promise<{ success: boolean, error?: string }> {
-        const dbf = await this.electronService.dbffile.DBFFile.open(path);
-        if (!dbf) {
-            return { success: false, error: "Can not load DBF File" };
-        }
-
-        try {
-            await dbf.appendRecords(data);
-        } catch (e) {
-            return { success: false, error: e.message };
-        }
-
-        return { success: true };
-    }
-
-
-    sleep() {
-        return new Promise(resolve => {
-            setTimeout(() => {
-                resolve(true);
-            }, 3000);
-        });
     }
 }
 

@@ -16,6 +16,7 @@ import { AppComponent } from './app.component';
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { Angular2PromiseButtonModule } from 'angular2-promise-buttons';
 import { ToastrModule } from "ngx-toastr";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -39,7 +40,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader => new Transla
                 deps: [HttpClient]
             }
         }),
-        ToastrModule.forRoot()
+        ToastrModule.forRoot(),
+        BrowserAnimationsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
