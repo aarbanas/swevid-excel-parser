@@ -1,12 +1,13 @@
 {
   "name": "swevid-excel-parser",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "main.js",
   "private": true,
   "dependencies": {
     "@electron/remote": "^2.0.5",
     "convert-excel-to-json": "^1.7.0",
     "dbffile": "^1.8.1",
+    "exceljs": "^4.3.0",
     "nedb": "^1.8.0",
     "parsedbf": "^1.1.1"
   }
