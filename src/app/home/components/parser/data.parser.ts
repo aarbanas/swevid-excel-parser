@@ -28,7 +28,7 @@ export class DataParser {
             //PLIVACI table
             const swimmer: Swimmer = {
                 SIFRA: organisation.SIFRA + this.getSwimmerId(counter.toString()), //ID
-                IME: row[name_cell],
+                IME: this.replaceCroatianLetters(row[name_cell]),
                 PREZIME: "",
                 JMBG: "",
                 RODEN: new Date(Number(row[year_of_birth_cell]), 0, 1, 23, 30),
@@ -236,6 +236,10 @@ export class DataParser {
     private prefillTimeWithZeros(time: string): string {
         const zeroNum = 2 - time.length;
         return '0'.repeat(zeroNum) + time;
+    }
+
+    private replaceCroatianLetters(name: string): string {
+        return name.replace('ć', 'æ').replace('Ć', 'Æ').replace('č', 'è').replace('Č', 'È');
     }
 }
 
