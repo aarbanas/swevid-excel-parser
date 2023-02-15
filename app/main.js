@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var electron_1 = require("electron");
 var path = require("path");
 var fs = require("fs");
-var url = require("url");
 var remoteMain = require("@electron/remote/main");
 remoteMain.initialize();
 var win = null;
@@ -39,11 +38,8 @@ function createWindow() {
             // Path when running electron in local folder
             pathIndex = '../dist/index.html';
         }
-        win.loadURL(url.format({
-            pathname: path.join(__dirname, pathIndex),
-            protocol: 'file:',
-            slashes: true
-        }));
+        var url_1 = new URL(path.join('file:', __dirname, pathIndex));
+        win.loadURL(url_1.href);
     }
     // Emitted when the window is closed.
     win.on('closed', function () {

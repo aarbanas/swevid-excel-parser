@@ -45,11 +45,8 @@ function createWindow(): BrowserWindow {
             pathIndex = '../dist/index.html';
         }
 
-        win.loadURL(url.format({
-            pathname: path.join(__dirname, pathIndex),
-            protocol: 'file:',
-            slashes: true
-        }));
+        const url = new URL(path.join('file:', __dirname, pathIndex));
+        win.loadURL(url.href);
     }
 
     // Emitted when the window is closed.

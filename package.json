@@ -1,6 +1,6 @@
 {
     "name": "swevid-excel-parser",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Angular electron Excel parser to DBF for swimming software",
     "homepage": "https://github.com/aarbanas/swevid-excel-parser",
     "author": {
