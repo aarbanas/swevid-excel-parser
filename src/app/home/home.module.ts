@@ -11,11 +11,15 @@ import { DatabaseService } from "../core/services/database/database.service";
 import { NgSelectModule } from "@ng-select/ng-select";
 import { CellPickerModalComponent } from "./components/cell-picker-modal/cell.picker.modal.component";
 import { Angular2PromiseButtonModule } from "angular2-promise-buttons";
+import {
+    InvalidCellModalComponent
+} from './components/invalid-cell-modal/invalid.cell.modal.component'
 
 @NgModule({
     declarations: [
         HomeComponent,
-        CellPickerModalComponent
+        CellPickerModalComponent,
+        InvalidCellModalComponent
     ],
     imports: [
         CommonModule,
@@ -30,7 +34,8 @@ import { Angular2PromiseButtonModule } from "angular2-promise-buttons";
         DataParser
     ],
     entryComponents: [
-        CellPickerModalComponent
+        CellPickerModalComponent,
+        InvalidCellModalComponent
     ]
 })
 export class HomeModule {
