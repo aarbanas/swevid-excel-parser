@@ -11,7 +11,8 @@
       "CELL": {
           "CLOSE": "Close",
           "SUBMIT": "Submit",
-          "TITLE": "Prepare excel for conversion"
+          "TITLE": "Prepare excel for conversion",
+          "VALIDATION_TITLE": "Invalid fields conversion"
       }
   }
 }

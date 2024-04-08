@@ -1,6 +1,6 @@
 {
   "name": "swevid-excel-parser",
-  "version": "1.1.2",
+  "version": "1.2.1",
   "main": "main.js",
   "private": true,
   "dependencies": {
