@@ -1,18 +1,18 @@
 {
   "PAGES": {
-      "HOME": {
-          "TITLE": "SWEVID Excel Converter",
-          "SELECT_FILE": "Select file",
-          "SELECT": "Select",
-          "CHANGE_SWEVID_PATH": "Change SWEVID path",
-          "SELECT_SWEVID_PATH": "Select SWEVID path",
-          "SELECT_ORGANISATION": "Select Organisation"
-      },
-      "CELL": {
-          "CLOSE": "Close",
-          "SUBMIT": "Submit",
-          "TITLE": "Prepare excel for conversion",
-          "VALIDATION_TITLE": "Invalid fields conversion"
-      }
+    "HOME": {
+      "TITLE": "SWEVID Excel Converter",
+      "SELECT_FILE": "Select file",
+      "SELECT": "Select",
+      "CHANGE_SWEVID_PATH": "Change SWEVID path",
+      "SELECT_SWEVID_PATH": "Select SWEVID path",
+      "SELECT_ORGANISATION": "Select Organisation"
+    },
+    "CELL": {
+      "CLOSE": "Close",
+      "SUBMIT": "Submit",
+      "TITLE": "Prepare excel for conversion",
+      "VALIDATION_TITLE": "Invalid fields conversion"
+    }
   }
 }
