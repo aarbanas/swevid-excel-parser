@@ -1,34 +1,43 @@
 <div class="modal-header d-flex">
-    <h4 class="modal-title" id="modal-basic-title">{{ 'PAGES.CELL.VALIDATION_TITLE' | translate }}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="close()">
-        <span aria-hidden="true">&times;</span>
-    </button>
+  <h4 class="modal-title" id="modal-basic-title">{{
+    'PAGES.CELL.VALIDATION_TITLE' | translate
+  }}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="close()">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div>
 
 <div class="modal-body">
-    <p>There is an issue with some fields</p>
+  <p>There is an issue with some fields</p>
 
-    <div class="d-flex flex-column col-6">
-        <div class="form-group">
-            <label>Name:</label>
-            <input type="text" [(ngModel)]="name" class="form-control"
-                   [ngClass]="{'is-invalid': !validationObject.name}">
-        </div>
-
-        <div class="form-group mt-2">
-            <label>Birth date:</label>
-            <input type="text" [(ngModel)]="birthDate" class="form-control"
-                   [ngClass]="{'is-invalid': !validationObject.birthDate}">
-        </div>
+  <div class="d-flex flex-column col-6">
+    <div class="form-group">
+      <label>Name:</label>
+      <input
+        type="text"
+        [(ngModel)]="name"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': !validationObject.name }"
+      />
     </div>
+
+    <div class="form-group mt-2">
+      <label>Birth date:</label>
+      <input
+        type="text"
+        [(ngModel)]="birthDate"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': !validationObject.birthDate }"
+      />
+    </div>
+  </div>
 </div>
 
 <div class="modal-footer">
-    <button (click)="close()" class="btn btn-outline-secondary">
-        {{ 'PAGES.CELL.CLOSE' | translate }}
-    </button>
-    <button (click)="submit()" class="btn btn-primary">
-        {{ 'PAGES.CELL.SUBMIT' | translate }}
-    </button>
+  <button (click)="close()" class="btn btn-outline-secondary">
+    {{ 'PAGES.CELL.CLOSE' | translate }}
+  </button>
+  <button (click)="submit()" class="btn btn-primary">
+    {{ 'PAGES.CELL.SUBMIT' | translate }}
+  </button>
 </div>
-

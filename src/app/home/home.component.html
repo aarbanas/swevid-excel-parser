@@ -1,30 +1,45 @@
 <div *ngIf="swevidPath; else selectSwevidPath" class="container">
-    <h1 class="title">
-        {{ 'PAGES.HOME.TITLE' | translate }}
-    </h1>
+  <h1 class="title">
+    {{ 'PAGES.HOME.TITLE' | translate }}
+  </h1>
 
-    <div class="row" style="margin-top: 2rem;">
-        <ng-select [items]="organisations" bindLabel="NAZIV" bindValue="SIFRA" (change)="onSelectOrganisation($event)"
-                   placeholder="Pick organisation..."></ng-select>
-        <label *ngIf="selectedOrganisation" style="margin-top: 1rem; cursor: pointer" for="my-file-selector">
-            <input type="file"
-                   accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
-                   style="display: none" id="my-file-selector" (change)="onFileAdd($event.target['files'][0])">
-            {{ 'PAGES.HOME.SELECT_FILE' | translate }}
-        </label>
-    </div>
+  <div class="row" style="margin-top: 2rem">
+    <ng-select
+      [items]="organisations"
+      bindLabel="NAZIV"
+      bindValue="SIFRA"
+      (change)="onSelectOrganisation($event)"
+      placeholder="Pick organisation..."
+    ></ng-select>
+    <label
+      *ngIf="selectedOrganisation"
+      style="margin-top: 1rem; cursor: pointer"
+      for="my-file-selector"
+    >
+      <input
+        type="file"
+        accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+        style="display: none"
+        id="my-file-selector"
+        (change)="onFileAdd($event.target['files'][0])"
+      />
+      {{ 'PAGES.HOME.SELECT_FILE' | translate }}
+    </label>
+  </div>
 
-    <label style="margin-top: 2rem; cursor: pointer"
-           (click)="onFolderPick()">{{ 'PAGES.HOME.CHANGE_SWEVID_PATH' | translate }}</label>
+  <label style="margin-top: 2rem; cursor: pointer" (click)="onFolderPick()">{{
+    'PAGES.HOME.CHANGE_SWEVID_PATH' | translate
+  }}</label>
 </div>
 
 <ng-template #selectSwevidPath>
-    <div class="container">
-        <h1 class="title">
-            {{ 'PAGES.HOME.SELECT_SWEVID_PATH' | translate }}
-        </h1>
+  <div class="container">
+    <h1 class="title">
+      {{ 'PAGES.HOME.SELECT_SWEVID_PATH' | translate }}
+    </h1>
 
-        <label style="margin-top: 2rem; cursor: pointer"
-               (click)="onFolderPick()">{{ 'PAGES.HOME.SELECT' | translate }}</label>
-    </div>
+    <label style="margin-top: 2rem; cursor: pointer" (click)="onFolderPick()">{{
+      'PAGES.HOME.SELECT' | translate
+    }}</label>
+  </div>
 </ng-template>
