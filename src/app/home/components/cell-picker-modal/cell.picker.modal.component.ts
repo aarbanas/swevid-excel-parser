@@ -21,6 +21,7 @@ export class CellPickerModalComponent implements OnInit {
   selectedName: string = '';
   selectedSex: string = '';
   selectedYob: string = '';
+  selectedClass: string = '';
 
   showSurname: boolean = false;
   selectedSurname: string = '';
@@ -88,6 +89,7 @@ export class CellPickerModalComponent implements OnInit {
           this.disciplineCell,
           this.organisation,
           this.swevidPath,
+          this.selectedClass,
         );
         this.close(result);
       } catch (e) {

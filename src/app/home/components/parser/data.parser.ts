@@ -24,6 +24,7 @@ export class DataParser {
     },
     organisation: any,
     swevid_path: string,
+    invalidClass?: string,
   ): Promise<{
     success: boolean;
     error?: string;
@@ -125,7 +126,7 @@ export class DataParser {
           PLASMAN09: 0,
           PLASMAN10: 0,
           REKORD: 0,
-          PLIVAC01: '',
+          PLIVAC01: invalidClass ?? '',
           PLIVAC02: '',
           PLIVAC03: '',
           PLIVAC04: '',

@@ -60,7 +60,7 @@
 
       <div class="form-group">
         <div class="gap-2 mb-1">
-          <label>Name:</label>
+          <label>Name*:</label>
           <button (click)="addSurname()"> + Surname </button>
         </div>
 
@@ -72,7 +72,7 @@
       </div>
 
       <div *ngIf="showSurname" class="form-group">
-        <label>Surname:</label>
+        <label>Surname*:</label>
         <ng-select
           [items]="columns"
           [(ngModel)]="selectedSurname"
@@ -81,7 +81,7 @@
       </div>
 
       <div class="form-group">
-        <label>Sex:</label>
+        <label>Sex*:</label>
         <ng-select
           [items]="columns"
           [(ngModel)]="selectedSex"
@@ -90,7 +90,7 @@
       </div>
 
       <div class="form-group">
-        <label>Year of Birth:</label>
+        <label>Year of Birth*:</label>
         <ng-select
           [items]="columns"
           [(ngModel)]="selectedYob"
@@ -99,7 +99,16 @@
       </div>
 
       <div class="form-group">
-        <label>Disciplines starting from:</label>
+        <label>Class (only for invalids):</label>
+        <ng-select
+          [items]="columns"
+          [(ngModel)]="selectedClass"
+          placeholder="Select name"
+        ></ng-select>
+      </div>
+
+      <div class="form-group">
+        <label>Disciplines starting from*:</label>
         <ng-select
           [items]="columns"
           [(ngModel)]="disciplinesFrom"
@@ -108,7 +117,7 @@
       </div>
 
       <div class="form-group">
-        <label>Disciplines ending on:</label>
+        <label>Disciplines ending on*:</label>
         <ng-select
           [items]="columns"
           [(ngModel)]="disciplinesTo"
