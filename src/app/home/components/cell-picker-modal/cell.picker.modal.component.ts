@@ -72,12 +72,11 @@ export class CellPickerModalComponent implements OnInit {
   }
 
   addSurname() {
-    this.showSurname = true;
+    this.showSurname = !this.showSurname;
   }
 
   submit() {
     this.promiseBtn = (async () => {
-      this.selectedName = this.prettifyAndConcatName();
       try {
         const result = await this.dataParser.parse(
           this.jsonFile,
@@ -89,6 +88,7 @@ export class CellPickerModalComponent implements OnInit {
           this.disciplineCell,
           this.organisation,
           this.swevidPath,
+          this.selectedSurname,
           this.selectedClass,
         );
         this.close(result);
@@ -121,19 +121,5 @@ export class CellPickerModalComponent implements OnInit {
         resolve(data);
       });
     });
-  }
-
-  private prettifyAndConcatName(): string {
-    let name = this.selectedName;
-    if (this.selectedSurname) {
-      name = name + ' ' + this.selectedSurname;
-    }
-
-    return name
-      .trim()
-      .toLowerCase()
-      .split(/[\s-]+/)
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
   }
 }

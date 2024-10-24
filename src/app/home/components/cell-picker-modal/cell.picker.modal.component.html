@@ -61,7 +61,7 @@
       <div class="form-group">
         <div class="gap-2 mb-1">
           <label>Name*:</label>
-          <button (click)="addSurname()"> + Surname </button>
+          <button (click)="addSurname()"> {{ showSurname ? "-" : "+" }} Surname </button>
         </div>
 
         <ng-select

@@ -24,6 +24,7 @@ export class DataParser {
     },
     organisation: any,
     swevid_path: string,
+    surname_cell?: string,
     invalidClass?: string,
   ): Promise<{
     success: boolean;
@@ -41,7 +42,7 @@ export class DataParser {
 
       counter++;
 
-      let name = row[name_cell];
+      let name = this.prettifyAndConcatName(row[name_cell], row[surname_cell]);
       let birthDate = row[year_of_birth_cell].toString();
 
       const validationObject = this.validateRow(name, birthDate);
@@ -126,7 +127,7 @@ export class DataParser {
           PLASMAN09: 0,
           PLASMAN10: 0,
           REKORD: 0,
-          PLIVAC01: invalidClass ?? '',
+          PLIVAC01: invalidClass && row[invalidClass] ? row[invalidClass] : '',
           PLIVAC02: '',
           PLIVAC03: '',
           PLIVAC04: '',
@@ -213,6 +214,19 @@ export class DataParser {
 
         swimmer_entry_data.push(swimmer_data);
       });
+    }
+    if (!swimmers.length) {
+      return {
+        success: false,
+        error: 'Nema podataka za kreiranje Plivac.xlsx',
+      };
+    }
+
+    if (!swimmer_entry_data.length) {
+      return {
+        success: false,
+        error: 'Nema podataka za kreiranje TurnirRez.xlsx',
+      };
     }
 
     await Promise.all([
@@ -342,6 +356,23 @@ export class DataParser {
 
       return '19' + dateBirth;
     }
+  }
+
+  private prettifyAndConcatName(
+    userName: string,
+    userSurname?: string,
+  ): string {
+    let name = userName;
+    if (userSurname) {
+      name = name + ' ' + userSurname;
+    }
+
+    return name
+      .trim()
+      .toLowerCase()
+      .split(/[\s-]+/)
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
 }
 
