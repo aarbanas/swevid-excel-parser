@@ -43,12 +43,16 @@ export class HomeComponent implements OnInit {
   }
 
   private async parseOrganisations() {
-    const orgBuffer = await this.readFile(
+    const dbfOrg = await this.electronService.dbffile.DBFFile.open(
       this.swevidPath + '/Baza/Organizacija.DBF',
     );
-    if (!orgBuffer?.length) return;
 
-    this.organisations = this.electronService.parseDBF(orgBuffer);
+    if (!dbfOrg.recordCount) return;
+
+    const data = [];
+    for await (const record of dbfOrg) data.push(record);
+
+    this.organisations = data;
   }
 
   onSelectOrganisation(org) {

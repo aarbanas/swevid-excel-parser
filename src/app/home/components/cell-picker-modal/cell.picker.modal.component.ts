@@ -30,8 +30,10 @@ export class CellPickerModalComponent implements OnInit {
   disciplinesTo: string = '';
   disciplinesColumns: string[] = [];
   disciplines: any[] = [];
+  filteredDisciplines: any[] = [];
 
   disciplineCell: { [cell: string]: any } = {};
+  poolLength: 25 | 50 = 50;
 
   promiseBtn: any;
 
@@ -63,12 +65,27 @@ export class CellPickerModalComponent implements OnInit {
       this.columns.findIndex((c) => c === this.disciplinesTo) + 1,
     );
 
-    const orgBuffer = await this.readFile(
+    const dbfDisciplines = await this.electronService.dbffile.DBFFile.open(
       this.swevidPath + '/Baza/Disciplina.DBF',
     );
-    if (!orgBuffer?.length) return;
+    if (!dbfDisciplines.recordCount) return;
 
-    this.disciplines = this.electronService.parseDBF(orgBuffer);
+    const data = [];
+    for await (const record of dbfDisciplines) data.push(record);
+
+    this.disciplines = data;
+
+    this.filterDisciplines();
+  }
+
+  filterDisciplines() {
+    this.filteredDisciplines = this.disciplines.filter(
+      ({ BAZEN }) => BAZEN === this.poolLength,
+    );
+  }
+
+  onPoolLengthChange() {
+    this.filterDisciplines();
   }
 
   addSurname() {
