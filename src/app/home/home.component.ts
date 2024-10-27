@@ -52,7 +52,10 @@ export class HomeComponent implements OnInit {
     const data = [];
     for await (const record of dbfOrg) data.push(record);
 
-    this.organisations = data;
+    this.organisations = data.map((org) => ({
+      ...org,
+      NAZIV: this.electronService.replaceNonAscii(org.NAZIV),
+    }));
   }
 
   onSelectOrganisation(org) {

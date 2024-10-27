@@ -73,7 +73,10 @@ export class CellPickerModalComponent implements OnInit {
     const data = [];
     for await (const record of dbfDisciplines) data.push(record);
 
-    this.disciplines = data;
+    this.disciplines = data.map((disc) => ({
+      ...disc,
+      NAZIV: this.electronService.replaceNonAscii(disc.NAZIV),
+    }));
 
     this.filterDisciplines();
   }

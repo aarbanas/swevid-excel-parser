@@ -58,4 +58,18 @@ export class ElectronService {
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
   }
+
+  // Function to replace non-ASCII characters with ASCII equivalents
+  replaceNonAscii(str: string): string {
+    const nonAsciiToAsciiMap = {
+      '\x8E': 'Ž',
+      '\x8A': 'Š',
+      'È': 'Č',
+    };
+
+    return str.replace(
+      /[^\x00-\x7F]/g,
+      (char) => nonAsciiToAsciiMap[char] || char,
+    );
+  }
 }
