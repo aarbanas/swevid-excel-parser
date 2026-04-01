@@ -1,6 +1,6 @@
 {
   "name": "swevid-excel-parser",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "description": "Angular electron Excel parser to DBF for swimming software",
   "homepage": "https://github.com/aarbanas/swevid-excel-parser",
   "author": {
@@ -46,7 +46,8 @@
     "publish:linux": "npm run build:prod && electron-builder build --linux -p always",
     "publish:windows": "npm run build:prod && electron-builder build --windows -p always",
     "publish:mac": "npm run build:prod && electron-builder build --mac -p always",
-    "publish:all": "npm run build:prod && electron-builder build --mac --linux --windows -p always"
+    "publish:all": "npm run build:prod && electron-builder build --mac --linux --windows -p always",
+    "release": "electron-builder"
   },
   "dependencies": {
     "@angular/animations": "^13.2.4",

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class ExcelService {
-  constructor(private electronService: ElectronService) {}
+  constructor(private electronService: ElectronService) { }
 
   convertToJSON(file: File): any {
     return this.electronService.excelToJson({
@@ -48,5 +48,48 @@ export class ExcelService {
     }
 
     return true;
+  }
+
+  async appendToExistingFile(path: string, rows: Array<any>): Promise<boolean> {
+    try {
+      const workbook = new this.electronService.ExcelJS.Workbook();
+      await workbook.xlsx.readFile(path);
+
+      const sheet =
+        workbook.worksheets.find((ws) => ws.state === 'visible') ??
+        workbook.worksheets[0];
+
+      // Object rows only write fields that match worksheet column `key`s.
+      // readFile() does not set keys (unlike createNewExcelFile's sheet.columns),
+      // so without this every appended row was empty on disk.
+      this.bindColumnKeysFromHeaderRow(sheet, 1);
+
+      let lastDataRow = 0;
+      sheet.eachRow((_, rowNumber) => {
+        lastDataRow = Math.max(lastDataRow, rowNumber);
+      });
+
+      for (const row of rows) {
+        lastDataRow += 1;
+        sheet.getRow(lastDataRow).values = row;
+      }
+
+      await workbook.xlsx.writeFile(path);
+      return true;
+    } catch (e) {
+      console.log(e);
+      return false;
+    }
+  }
+
+  /** Map row 1 header text to ExcelJS column keys so row.values = { KEY: v } works. */
+  private bindColumnKeysFromHeaderRow(sheet: any, headerRowNumber: number): void {
+    const headerRow = sheet.getRow(headerRowNumber);
+    headerRow.eachCell((cell: { text: string }, colNumber: number) => {
+      const key = String(cell.text ?? '').trim();
+      if (key) {
+        sheet.getColumn(colNumber).key = key;
+      }
+    });
   }
 }

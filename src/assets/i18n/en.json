@@ -6,7 +6,8 @@
       "SELECT": "Select",
       "CHANGE_SWEVID_PATH": "Change SWEVID path",
       "SELECT_SWEVID_PATH": "Select SWEVID path",
-      "SELECT_ORGANISATION": "Select Organisation"
+      "SELECT_ORGANISATION": "Select Organisation",
+      "CHECKBOX_TITLE": "Append data to existing file"
     },
     "CELL": {
       "CLOSE": "Close",

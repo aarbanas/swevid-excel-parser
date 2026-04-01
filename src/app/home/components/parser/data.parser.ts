@@ -26,6 +26,7 @@ export class DataParser {
     swevid_path: string,
     surname_cell?: string,
     invalidClass?: string,
+    appendToExistingFile?: boolean,
   ): Promise<{
     success: boolean;
     error?: string;
@@ -229,17 +230,28 @@ export class DataParser {
       };
     }
 
-    await Promise.all([
-      this.excelService.createNewExcelFile(
+    if (appendToExistingFile) {
+      // Sequential saves avoid overlapping ExcelJS zip writes in the renderer.
+      await this.excelService.appendToExistingFile(
         swevid_path + '/Plivac.xlsx',
         swimmers,
-      ),
-      this.excelService.createNewExcelFile(
+      );
+      await this.excelService.appendToExistingFile(
         swevid_path + '/TurnirRez.xlsx',
         swimmer_entry_data,
-      ),
-    ]);
-
+      );
+    } else {
+      await Promise.all([
+        this.excelService.createNewExcelFile(
+          swevid_path + '/Plivac.xlsx',
+          swimmers,
+        ),
+        this.excelService.createNewExcelFile(
+          swevid_path + '/TurnirRez.xlsx',
+          swimmer_entry_data,
+        ),
+      ]);
+    }
     return { success: true };
   }
 

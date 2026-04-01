@@ -10,6 +10,7 @@ export class CellPickerModalComponent implements OnInit {
   @Input() jsonFile: any;
   @Input() swevidPath: string;
   @Input() organisation: any;
+  @Input() appendToExistingFile: boolean;
 
   sheets: string[] = [];
   selectedSheet: string = '';
@@ -110,6 +111,7 @@ export class CellPickerModalComponent implements OnInit {
           this.swevidPath,
           this.selectedSurname,
           this.selectedClass,
+          this.appendToExistingFile,
         );
         this.close(result);
       } catch (e) {

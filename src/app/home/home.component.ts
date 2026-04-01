@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   organisations: any[] = [];
 
   selectedOrganisation: any = null;
+  isCheckboxChecked: boolean = true;
 
   constructor(
     private excelService: ExcelService,
@@ -77,6 +78,7 @@ export class HomeComponent implements OnInit {
     modal.componentInstance.jsonFile = jsonFile;
     modal.componentInstance.swevidPath = this.swevidPath;
     modal.componentInstance.organisation = this.selectedOrganisation;
+    modal.componentInstance.appendToExistingFile = this.isCheckboxChecked;
     modal.result.then((res) => {
       if (!res.success) {
         this.toastService.error(res.error || 'Error');
